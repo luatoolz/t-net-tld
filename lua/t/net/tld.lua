@@ -4,11 +4,13 @@ local ok={string=true}
 return setmetatable({},{
 __call=function(self, host)
   if not (ok[type(host)] and #host>0) then return end
-  local rv=host:lower():strip('.'):split('.') or {}
-  setmetatable(rv,getmetatable(self))
-  while #rv>0 do
-    if psl.exists(tostring(rv)) then return rv end
-    table.remove(rv, 1)
+  local rv=host:lower():strip('.'):split('.')
+  if type(rv)=='table' then
+    setmetatable(rv,getmetatable(self))
+    while #rv>0 do
+      if psl.exists(tostring(rv)) then return rv end
+      table.remove(rv, 1)
+    end
   end
 end,
 __export=function(self)
