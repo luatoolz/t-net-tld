@@ -3,7 +3,7 @@ describe("tld", function()
 	setup(function()
     t = require "t"
     is = t.is
-    tld = t.net.domain.tld
+    tld = t.net.tld
 	end)
   it("meta", function()
     assert.truthy(is)
@@ -17,8 +17,14 @@ describe("tld", function()
 
     assert.equal('com.ru', tostring(tld('com.ru')))
     assert.equal('com.ru', tostring(tld('.com.ru')))
+
+    assert.is_true(tld('com') == tld('.com'))
   end)
   it("negative", function()
+    assert.is_nil(tld('8.8.8.8'))
+
+    assert.is_nil(tld(''))
+    assert.is_nil(tld('.'))
     assert.is_nil(tld('.local'))
     assert.is_nil(tld('local'))
     assert.is_nil(tld({}))
@@ -27,6 +33,8 @@ describe("tld", function()
     assert.is_nil(tld(''))
     assert.is_nil(tld(false))
     assert.is_nil(tld(true))
+
+    assert.not_true(tld('com') == tld('info'))
   end)
   it("nil", function()
     assert.is_nil(tld(nil))
