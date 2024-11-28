@@ -10,8 +10,12 @@ describe("tld", function()
     assert.truthy(is.callable(tld))
   end)
   it("positive", function()
+    assert.equal('com', tostring(tld('COM')))
+    assert.equal('com', tostring(tld('CoM')))
+
     assert.equal('com', tostring(tld('com')))
     assert.equal('com', tostring(tld('.com')))
+
     assert.equal('рф', tostring(tld('.рф')))
     assert.equal('info', tostring(tld('.info')))
 
